@@ -8,10 +8,7 @@ one() {
   id=$1
   [ -s "a16/$id.m4a" ] && return 0
   curl -sf --retry 4 --retry-delay 2 -o "src/$id.mp3" "https://everyayah.com/data/Alafasy_128kbps/$id.mp3" || { echo "miss $id"; return 0; }
-  afconvert -f m4af -d aach -b 24000 -c 1 "src/$id.mp3" "a24/$id.m4a" 2>/dev/null \
-    || afconvert -f m4af -d 'aach@44100' -b 24000 -c 1 "src/$id.mp3" "a24/$id.m4a" 2>/dev/null \
-    || afconvert -f m4af -d 'aac@22050' -b 24000 -c 1 "src/$id.mp3" "a24/$id.m4a" \
-    || echo "fail $id"
+  afconvert -f m4af -d aach -b 16000 -c 1 "src/$id.mp3" "a16/$id.m4a" || echo "fail $id"
   rm -f "src/$id.mp3"
 }
 export -f one
